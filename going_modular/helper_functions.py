@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from torch import nn
+from torch.utils.tensorboard import SummaryWriter
 
 import os
 import zipfile
@@ -292,3 +293,25 @@ def download_data(source: str,
             os.remove(data_path / target_file)
     
     return image_path
+
+def create_writer(experiment_name: str,
+                  model_name: str,
+                  extra: str = None):
+    def create_writer(experiment_name: str,
+                  model_name: str,
+                  extra: str = None):
+    """Creates a torch.utils.tensorboard.writer.SummaryWriter() instance tracking to a specific directory."""
+    from datetime import datetime
+    import os
+
+    # Get timestamp of current date in reverse order
+    timestamp = datetime.now().strftime("%Y-%m-%d")
+
+    if extra:
+        # Create log directory path
+        log_dir = os.path.join("runs", timestamp, experiment_name, model_name, extra)
+    else:
+        log_dir = os.path.join("runs", timestamp, experiment_name, model_name)
+    
+    print(f"[INFO] Created SummaryWriter saving to {log_dir}")
+    return SummaryWriter(log_dir=log_dir)
