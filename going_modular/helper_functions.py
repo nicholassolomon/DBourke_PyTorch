@@ -296,10 +296,7 @@ def download_data(source: str,
 
 def create_writer(experiment_name: str,
                   model_name: str,
-                  extra: str = None):
-    def create_writer(experiment_name: str,
-                  model_name: str,
-                  extra: str = None):
+                  extra: str = None) -> SummaryWriter:
     """Creates a torch.utils.tensorboard.writer.SummaryWriter() instance tracking to a specific directory."""
     from datetime import datetime
     import os
